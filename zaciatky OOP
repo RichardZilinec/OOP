@@ -1,0 +1,20 @@
+class Komplex:
+    def __init__(self,r,k):
+        self.r = r
+        self.k = k
+
+    def __add__(self, other):
+        return Komplex(self.r + other.r,self.k + other.k)
+
+    def __sub__(self, other):
+        return Komplex(self.r - other.r,self.k - other.k)
+
+    def __mul__(self, other):
+        return Komplex(self.r * other.r - self.k * other.k, self.r * other.k + self.k * other.r)
+
+k1 = Komplex(3,4)
+k2 = Komplex(2,1)
+k3 = k1 + k2
+k4 = k1 - k2
+k5 = k1*k2
+print(k5.r,k5.k)
