@@ -1,0 +1,86 @@
+import tkinter as tk
+
+win = tk.Tk()
+win.title("Digitalne hodinky - kompozicia")
+canvas = tk.Canvas(win, height=500, width=500, bg= "white")
+canvas.pack()
+
+class Stick:
+    def __init__(self,canvs,x,y,dx,dy,color):
+        self.id = canvas.create_rectangle(x,y,x+dx,y+dy,fill=color)
+        self.canvas = canvas
+
+    def on(self):
+        self.canvas.itemconfig(self.id,state='normal')
+
+    def off(self):
+        self.canvas.itemconfig(self.id,state='hidden')
+
+
+
+class Segment:
+    def __init__(self,canvas,x,y,s,b,color):
+        self.sticks = []
+        self.sticks.append(Stick(canvas,x+s,y,b,s,color))
+        self.sticks.append(Stick(canvas,x+s+b,y+s,s,b,color))
+        self.sticks.append(Stick(canvas,x+s,y+s+b,b,s,color))
+        self.sticks.append(Stick(canvas,x,y+s,s,b,color))
+        self.sticks.append(Stick(canvas,x+s+b,y+s+b+s,s,b,color))
+        self.sticks.append(Stick(canvas,x+s,y+s+b+s+b,b,s,color))
+        self.sticks.append(Stick(canvas,x,y+s+b+s,s,b,color))
+        self.canvas = canvas
+
+    def showall(self):
+        for s in self.sticks:
+            s.on()
+
+    def hideall(self):
+        for s in self.sticks:
+            s.off()
+
+    def show(self,number):
+        if number == 0:
+            self.showall()
+            self.sticks[2].off()
+        elif number == 1:
+            self.hideall()
+            self.sticks[1].on()
+            self.sticks[4].on()
+        elif number == 2:
+            self.showall()
+            self.sticks[3].off()
+            self.sticks[4].off()
+        elif number == 3:
+            self.showall()
+            self.sticks[3].off()
+            self.sticks[6].off()
+        elif number == 4:
+            self.showall()
+            self.sticks[0].off()
+            self.sticks[6].off()
+            self.sticks[5].off()
+        elif number == 5:
+            self.showall()
+            self.sticks[1].off()
+            self.sticks[6].off()
+        elif number == 6:
+            self.showall()
+            self.sticks[1].off()
+        elif number == 7:
+            self.hideall()
+            self.sticks[0].on()
+            self.sticks[1].on()
+            self.sticks[4].on()
+        elif number == 8:
+            self.showall()
+        elif number == 9:
+            self.showall()
+            self.sticks[6].off()
+
+
+#s1 = Stick(canvas,10,10,50,10,'black')
+#s2 = Stick(canvas,200,200,10,50,'black')
+segment = Segment(canvas,100,100,20,80,"red")
+segment.show(4)
+
+win.mainloop()
